@@ -1,9 +1,7 @@
 package com.boxing_app.boxing_fighter_management_app.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -11,6 +9,8 @@ import java.math.BigDecimal;
 @Table(name="boxers")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Fighter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class Fighter {
     private int years_of_boxing;
 
     @Column(name="knockout_percentage")
-    private BigDecimal knockout_percentage;
+    private double knockout_percentage;
 
     @Column(name="photo_attachment")
     private String photo_attachment;
