@@ -38,4 +38,8 @@ public class FighterManagementAppDao {
 
     }
 
+    public Fighter getFighter(long fighterID) {
+        return repo.getReferenceById(fighterID);
+    }
+
 }

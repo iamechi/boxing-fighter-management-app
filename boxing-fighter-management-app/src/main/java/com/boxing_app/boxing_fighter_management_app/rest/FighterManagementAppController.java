@@ -2,6 +2,7 @@ package com.boxing_app.boxing_fighter_management_app.rest;
 
 import com.boxing_app.boxing_fighter_management_app.model.Fighter;
 import com.boxing_app.boxing_fighter_management_app.model.FighterManagementAppDao;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,14 @@ public class FighterManagementAppController {
         return ResponseEntity.ok(savedFighter);
     }
 
+    @PostMapping("fighters/update")
+    public ResponseEntity<?> updateFighter(@RequestBody Fighter fighter) {
+        Fighter savedFighter;
+        savedFighter = service.addFighter(fighter);
+
+        return ResponseEntity.ok(savedFighter);
+    }
+
     //A check to see if a fighter already has been added
     public boolean fighterExists(Fighter fighter) {
         boolean hasMatch;
@@ -54,4 +63,5 @@ public class FighterManagementAppController {
 
         return hasMatch;
     }
+
 }
