@@ -2,6 +2,7 @@ package com.boxing_app.boxing_fighter_management_app.rest;
 
 import com.boxing_app.boxing_fighter_management_app.model.Fighter;
 import com.boxing_app.boxing_fighter_management_app.model.FighterManagementAppDao;
+import com.boxing_app.boxing_fighter_management_app.model.FighterSpecs;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(
@@ -50,6 +52,14 @@ public class FighterManagementAppController {
         savedFighter = service.addFighter(fighter);
 
         return ResponseEntity.ok(savedFighter);
+    }
+
+    @PostMapping("fighters/search")
+    public ResponseEntity<?> searchForFighter(@RequestBody Map<String, Object> criteria) {
+        List<Fighter> fighters = service.getFighter(criteria);
+
+        System.out.println(criteria);
+        return ResponseEntity.ok(fighters);
     }
 
     //A check to see if a fighter already has been added
