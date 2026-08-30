@@ -14,4 +14,8 @@ public class FighterSpecs {
     public static Specification<Fighter> lastNameStartsWith(String providedName) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("last_name"), providedName + "%");
     }
+
+    public static Specification<Fighter> stateStartsWith(String providedState) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("current_state_residence"), providedState + "%");
+    }
 }

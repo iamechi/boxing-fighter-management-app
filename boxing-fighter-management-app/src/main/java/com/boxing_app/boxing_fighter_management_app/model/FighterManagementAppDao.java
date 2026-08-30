@@ -49,21 +49,26 @@ public class FighterManagementAppDao {
         value = fighterCriteria.get("fighterID");
         if (value instanceof Long providedID && providedID > -1) {
             System.out.println("entered");
-            spec.and(FighterSpecs.findById(providedID));
+            spec = spec.and(FighterSpecs.findById(providedID));
         }
 
         value = fighterCriteria.get("first_name");
         System.out.println("object: " + value);
         if (value instanceof String firstNameProvided && StringUtils.hasLength(firstNameProvided)) {
             System.out.println("entered 2");
-            spec.and(FighterSpecs.firstNameStartsWith(firstNameProvided));
+            spec = spec.and(FighterSpecs.firstNameStartsWith(firstNameProvided));
         }
 
 
         value = fighterCriteria.get("last_name");
         if (value instanceof String lastNameProvided && StringUtils.hasLength(lastNameProvided)) {
             System.out.println("entered 3");
-            spec.and(FighterSpecs.lastNameStartsWith(lastNameProvided));
+            spec = spec.and(FighterSpecs.lastNameStartsWith(lastNameProvided));
+        }
+
+        value = fighterCriteria.get("current_state_residence");
+        if (value instanceof String stateProvided && StringUtils.hasLength(stateProvided)) {
+            spec = spec.and(FighterSpecs.stateStartsWith(stateProvided));
         }
 
         return repo.findAll(spec);
