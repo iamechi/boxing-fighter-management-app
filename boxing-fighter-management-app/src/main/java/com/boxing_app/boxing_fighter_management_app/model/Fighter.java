@@ -2,9 +2,7 @@ package com.boxing_app.boxing_fighter_management_app.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.math.BigDecimal;
-
+//Entity class for the boxers table in the database
 @Entity
 @Table(name="boxers")
 @NoArgsConstructor

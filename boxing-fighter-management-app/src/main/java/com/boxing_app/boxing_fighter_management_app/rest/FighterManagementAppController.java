@@ -2,8 +2,6 @@ package com.boxing_app.boxing_fighter_management_app.rest;
 
 import com.boxing_app.boxing_fighter_management_app.model.Fighter;
 import com.boxing_app.boxing_fighter_management_app.model.FighterManagementAppDao;
-import com.boxing_app.boxing_fighter_management_app.model.FighterSpecs;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,21 +20,26 @@ public class FighterManagementAppController {
     @Autowired
     FighterManagementAppDao service;
 
+    //Mapping method for returning all fighter methods
     @GetMapping("/fighters")
     public List<Fighter> getAllFighters() {
         return service.getAllFighters();
     }
 
-    /*returns a http response to the front end after saving,
+    //A PostMapping method that handles the adding of a new fighter record.
+    /*Returns a http response to the front end after saving,
      let the user know if save was successful or not */
     @PostMapping("/fighters/add")
     public ResponseEntity<?> addFighters(@RequestBody Fighter fighter) {
         Fighter savedFighter;
 
+        /*This is to set the fighter ID to null so that the inherited save method from JpaRepository
+        will execute an insert query instead of an update query*/
         if (fighter.getFighterID() == 0) {
             fighter.setFighterID(null);
         }
 
+        //This logic handles what http status to return to the front-end
         if (fighterExists(fighter)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A fighter with this name already exists");
         }
@@ -46,6 +49,7 @@ public class FighterManagementAppController {
         return ResponseEntity.ok(savedFighter);
     }
 
+    //PostMapping method for updating an existing record
     @PostMapping("fighters/update")
     public ResponseEntity<?> updateFighter(@RequestBody Fighter fighter) {
         Fighter savedFighter;
@@ -54,11 +58,11 @@ public class FighterManagementAppController {
         return ResponseEntity.ok(savedFighter);
     }
 
+    //Mapping method for handling the search
     @PostMapping("fighters/search")
     public ResponseEntity<?> searchForFighter(@RequestBody Map<String, Object> criteria) {
         List<Fighter> fighters = service.getFighter(criteria);
 
-        System.out.println(criteria);
         return ResponseEntity.ok(fighters);
     }
 
