@@ -2,6 +2,7 @@ package com.boxing_app.boxing_fighter_management_app.rest;
 
 import com.boxing_app.boxing_fighter_management_app.model.Fighter;
 import com.boxing_app.boxing_fighter_management_app.model.FighterManagementAppDao;
+import com.boxing_app.boxing_fighter_management_app.model.FighterSearchFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,14 +61,14 @@ public class FighterManagementAppController {
 
     //Mapping method for handling the search
     @PostMapping("fighters/search")
-    public ResponseEntity<?> searchForFighter(@RequestBody Map<String, Object> criteria) {
+    public ResponseEntity<?> searchForFighter(@RequestBody FighterSearchFormDTO criteria) {
         List<Fighter> fighters = service.getFighter(criteria);
 
         return ResponseEntity.ok(fighters);
     }
 
     //A check to see if a fighter already has been added
-    public boolean fighterExists(Fighter fighter) {
+    private boolean fighterExists(Fighter fighter) {
         boolean hasMatch;
         List<Fighter> allFighters = service.getAllFighters();
 

@@ -22,7 +22,7 @@ public class FighterManagementAppDao {
     public Fighter addFighter(Fighter fighter) { return repo.save(fighter); }
 
     //Handles the searching of fighter records
-    public List<Fighter> getFighter(Map<String, Object> fighterCriteria) {
+    public List<Fighter> getFighter(FighterSearchFormDTO fighterCriteria) {
         Object value;
 
         //This basically sets up a basic search query without a where clause
@@ -31,25 +31,25 @@ public class FighterManagementAppDao {
         /*Each one of these conditions lead to a condition being added to the where clause for the query
         if true. The spec object is basically being used as a tool for creating the database query that will
         be used*/
-        value = fighterCriteria.get("fighterID");
-        if (value instanceof Long providedID && providedID > -1) {
-            spec = spec.and(FighterSpecs.findById(providedID));
+        value = fighterCriteria.fighterID();
+        if (value instanceof Long providedId && providedId > -1) {
+            System.out.println("Entered findById if-condition");
+            spec = spec.and(FighterSpecs.findById(providedId));
         }
 
-        value = fighterCriteria.get("first_name");
-        if (value instanceof String firstNameProvided && StringUtils.hasLength(firstNameProvided)) {
-            spec = spec.and(FighterSpecs.firstNameStartsWith(firstNameProvided));
+        value = fighterCriteria.first_name();
+        if (value instanceof String providedFirstName && StringUtils.hasLength(providedFirstName)) {
+            spec = spec.and(FighterSpecs.firstNameStartsWith(providedFirstName));
         }
 
-
-        value = fighterCriteria.get("last_name");
-        if (value instanceof String lastNameProvided && StringUtils.hasLength(lastNameProvided)) {
-            spec = spec.and(FighterSpecs.lastNameStartsWith(lastNameProvided));
+        value = fighterCriteria.last_name();
+        if (value instanceof String providedLastName && StringUtils.hasLength(providedLastName)) {
+            spec = spec.and(FighterSpecs.lastNameStartsWith(providedLastName));
         }
 
-        value = fighterCriteria.get("current_state_residence");
-        if (value instanceof String stateProvided && StringUtils.hasLength(stateProvided)) {
-            spec = spec.and(FighterSpecs.stateStartsWith(stateProvided));
+        value = fighterCriteria.current_state_residence();
+        if (value instanceof String providedState && StringUtils.hasLength(providedState)) {
+            spec = spec.and(FighterSpecs.stateStartsWith(providedState));
         }
 
         /*The spec object gets passed to an inherited findAll method from JpaRepository that
