@@ -17,12 +17,13 @@ import java.util.Map;
         allowedHeaders = "*",
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}
 )
+@RequestMapping("/api/fighters")
 public class FighterManagementAppController {
     @Autowired
     FighterManagementAppDao service;
 
     //Mapping method for returning all fighter methods
-    @GetMapping("/fighters")
+    @GetMapping
     public List<Fighter> getAllFighters() {
         return service.getAllFighters();
     }
@@ -30,7 +31,7 @@ public class FighterManagementAppController {
     //A PostMapping method that handles the adding of a new fighter record.
     /*Returns a http response to the front end after saving,
      let the user know if save was successful or not */
-    @PostMapping("/fighters/add")
+    @PostMapping("/add")
     public ResponseEntity<?> addFighters(@RequestBody Fighter fighter) {
         Fighter savedFighter;
 
@@ -51,7 +52,7 @@ public class FighterManagementAppController {
     }
 
     //PostMapping method for updating an existing record
-    @PostMapping("fighters/update")
+    @PostMapping("/update")
     public ResponseEntity<?> updateFighter(@RequestBody Fighter fighter) {
         Fighter savedFighter;
         savedFighter = service.addFighter(fighter);
@@ -60,7 +61,7 @@ public class FighterManagementAppController {
     }
 
     //Mapping method for handling the search
-    @PostMapping("fighters/search")
+    @PostMapping("/search")
     public ResponseEntity<?> searchForFighter(@RequestBody FighterSearchFormDTO criteria) {
         List<Fighter> fighters = service.getFighter(criteria);
 
